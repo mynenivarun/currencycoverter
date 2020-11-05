@@ -1,0 +1,36 @@
+var crrncy = {'INR': {'EUR': 0.011, 'USD': 0.014, 'AUS': 0.019, 'SLR': 2.49, 'KR': 15.21, 'RUS': 1.04}, 'USD': {'EUR': 1.2, 'INR': 79.37, 'AUS': 1.38, 'SLR': 184.50, 'KR': 1124.81, 'RUS': 77.01},'EUR': {'USD': 1.18, 'INR': 87.40, 'AUS': 1.63, 'SLR': 218.01, 'KR': 1329.14, 'RUS': 90.98}, 'AUS': {'USD': 0.73, 'INR': 53.74, 'EUR': 0.61, 'SLR': 134.02, 'KR': 816.77, 'RUS': 55.92}, 'SLR': {'USD': 0.0054, 'INR': 0.40, 'EUR': 0.0042, 'AUS': 0.0075, 'KR': 6.10, 'RUS': 0.42}, 'KR': {'USD': 0.00089, 'INR': 0.066, 'EUR': 0.00075, 'AUS': 0.0012, 'SLR': 0.16, 'RUS': 0.068}, 'RUS': {'USD': 0.013, 'INR': 0.96, 'EUR': 0.011, 'AUS': 0.018, 'KR': 14.62, 'SLR': 2.40},}
+var btn = document.querySelector('.calculate-btn');
+var baseCurrencyInput = document.getElementById('currency-1');
+var secondCurrencyInput = document.getElementById('currency-2');
+var amountInput = document.getElementById('amount');
+var toShowAmount = document.querySelector('.given-amount');
+var toShowBase = document.querySelector('.base-currency');
+var toShowSecond = document.querySelector('.second-currency');
+var toShowResult = document.querySelector('.final-result');
+
+function convertCurrency(event) {
+  event.preventDefault();
+  var amount = amountInput.value;
+  var from = baseCurrencyInput.value;
+  var to = secondCurrencyInput.value;
+  var result = 0;
+  
+  try{
+    if (from == to){
+      result = amount;
+    } else {
+     result = amount * crrncy[from][to];
+  }
+  }
+  catch(err) {
+    result = amount * (1 / crrncy[to][from]);
+  }
+  
+  toShowAmount.innerHTML = amount;
+  toShowBase.textContent = from + ' = ';
+  toShowSecond.textContent = to;
+  toShowResult.textContent = result; 
+}
+
+btn.addEventListener('click', convertCurrency);
+
